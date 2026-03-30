@@ -1,7 +1,11 @@
-import React from 'react';
+import { AllRoutes } from './Routes/AllRoutes';
+import { Navbar } from './Components/Navbar';
 
 export const App = () => {
   return (
-    <h1 class="text-3xl font-bold underline bg-amber-400">Hello world!</h1>
+    <>
+      <Navbar />
+      <AllRoutes />
+    </>
   );
 };
