@@ -1,0 +1,70 @@
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { loginApi, signupApi } from './AuthApi';
+
+export const loginUser = createAsyncThunk(
+  'users/login',
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await loginApi(data);
+      console.log('🚀 ~ res.data:', res.data);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  },
+);
+
+export const signUser = createAsyncThunk(
+  'users/signup',
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await signupApi(data);
+      console.log('🚀 ~ res:', res.data);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  },
+);
+
+const AuthSlicer = createSlice({
+  name: 'auth',
+  initialState: {
+    isAuth: false,
+    isLoading: false,
+    isError: { status: false, msg: null },
+    token: '',
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isAuth = true;
+        state.token = action.payload;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.isError.status = true;
+        state.isError.msg = action.payload;
+        state.isLoading = false;
+        state.token = '';
+        state.isAuth = false;
+      })
+      // signup
+
+      .addCase(signUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(signUser.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(signUser.rejected, (state) => {
+        state.isError = true;
+      });
+  },
+});
+
+export const Reducer = AuthSlicer.reducer;
