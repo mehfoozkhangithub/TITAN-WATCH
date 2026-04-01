@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import React from 'react';
+
+import { loginUser } from '../Redux/Auth/AuthSlicer';
 import { useDispatch } from 'react-redux';
 
-import { signUser } from '../Redux/Auth/AuthSlicer';
-
-export const Signup = () => {
-  const [formData, setFormData] = useState({});
+export const Login = () => {
+  const [formData, setFormData] = React.useState({});
 
   const dispatch = useDispatch();
 
@@ -22,20 +22,10 @@ export const Signup = () => {
     e.preventDefault();
 
     console.log('🚀 ~ formData:', formData);
-    dispatch(signUser(formData));
+    dispatch(loginUser(formData));
   };
   return (
     <form onSubmit={handleSubmit}>
-      <div className="name flex gap-2.5 m-2">
-        <label htmlFor="userName">name :- </label>
-        <input
-          className="border-2 border-gray-600"
-          type="text"
-          id="userName"
-          name="name"
-          onChange={(e) => handleChange(e.target)}
-        />
-      </div>
       <div className="email flex gap-2.5 m-2">
         <label htmlFor="userEmail">email :- </label>
         <input
