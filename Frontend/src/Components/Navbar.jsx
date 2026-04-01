@@ -19,7 +19,11 @@ export const Navbar = () => {
           <NavLink
             style={({ isActive }) => {
               return isActive
-                ? { background: 'tomato' }
+                ? {
+                    background: 'tomato',
+                    borderRadius: '0.5rem',
+                    padding: '0.3rem 0.9rem',
+                  }
                 : { background: 'transparent' };
             }}
             end

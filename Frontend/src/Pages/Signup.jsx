@@ -1,9 +1,28 @@
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { loginUser, signUser } from '../Redux/Auth/AuthSlicer';
+
 export const Signup = () => {
+  const [formData, setFormData] = useState({});
+
   const dispatch = useDispatch();
 
-  const handleSubmit = () => {};
+  const handleChange = (data) => {
+    const { value, name } = data;
+
+    setFormData((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    dispatch(loginUser(formData));
+  };
   return (
     <form onSubmit={handleSubmit}>
       <div className="name flex gap-2.5 m-2">
@@ -13,6 +32,7 @@ export const Signup = () => {
           type="text"
           id="userName"
           name="userName"
+          onChange={(e) => handleChange(e.target)}
         />
       </div>
       <div className="email flex gap-2.5 m-2">
@@ -22,6 +42,7 @@ export const Signup = () => {
           type="email"
           id="userEmail"
           name="userEmail"
+          onChange={(e) => handleChange(e.target)}
         />
       </div>
       <div className="pass flex gap-2.5 m-2">
@@ -31,6 +52,7 @@ export const Signup = () => {
           type="password"
           id="userPass"
           name="userPass"
+          onChange={(e) => handleChange(e.target)}
         />
       </div>
       <button
