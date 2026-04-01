@@ -33,7 +33,7 @@ const AuthSlicer = createSlice({
     isAuth: false,
     isLoading: false,
     isError: { status: false, msg: null },
-    token: '',
+    token: localStorage.getItem('token') || '',
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -42,16 +42,18 @@ const AuthSlicer = createSlice({
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
+        state.token = action.payload;
         state.isLoading = false;
         state.isAuth = true;
-        state.token = action.payload;
+
+        localStorage.setItem('token', JSON.stringify(action.payload));
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isError.status = true;
         state.isError.msg = action.payload;
         state.isLoading = false;
-        state.token = '';
         state.isAuth = false;
+        state.token = '';
       })
       // signup
 

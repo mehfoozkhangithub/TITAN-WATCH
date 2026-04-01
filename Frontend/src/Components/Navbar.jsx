@@ -10,6 +10,10 @@ export const Navbar = () => {
       path: '/signup',
       title: 'signup',
     },
+    {
+      path: '/login',
+      title: 'login',
+    },
   ];
 
   return (
