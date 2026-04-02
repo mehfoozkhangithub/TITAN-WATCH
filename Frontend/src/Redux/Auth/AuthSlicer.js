@@ -6,10 +6,13 @@ export const loginUser = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const res = await loginApi(data);
-      console.log('🚀 ~ res.data:', res.data);
-      return res.data;
+      console.log('🚀 ~ data:', data);
+      console.log('🚀 ~ res.data:', res);
+      return res;
     } catch (err) {
-      return rejectWithValue(err.response.data);
+      console.log('🚀 ~ err:', err.response);
+
+      return rejectWithValue(err.response);
     }
   },
 );
@@ -30,9 +33,9 @@ export const signUser = createAsyncThunk(
 const AuthSlicer = createSlice({
   name: 'auth',
   initialState: {
-    isAuth: false,
+    isAuth: localStorage.getItem('token') || false,
     isLoading: false,
-    isError: { status: false, msg: null },
+    isError: { status: null, msg: null },
     token: localStorage.getItem('token') || '',
   },
   reducers: {},
@@ -42,15 +45,21 @@ const AuthSlicer = createSlice({
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.token = action.payload;
+        state.token = {
+          status: action.payload.status,
+          msg: action.payload.data.msg,
+          token: action.payload.data.token,
+        };
         state.isLoading = false;
         state.isAuth = true;
 
         localStorage.setItem('token', JSON.stringify(action.payload));
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.isError.status = true;
-        state.isError.msg = action.payload;
+        state.isError = {
+          status: action.payload.status,
+          msg: action.payload.data,
+        };
         state.isLoading = false;
         state.isAuth = false;
         state.token = '';

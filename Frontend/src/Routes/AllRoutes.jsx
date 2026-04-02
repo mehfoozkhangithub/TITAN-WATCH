@@ -16,7 +16,6 @@ export const AllRoutes = () => {
           </PrivateRoutes>
         }
       ></Route>
-
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
       <Route path="*" element={<h1>Page not found!!</h1>}></Route>

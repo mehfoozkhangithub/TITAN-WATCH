@@ -84,14 +84,14 @@ app.post('/login', async (req, res) => {
       const hashPass = checkUser[0].pass;
       console.log('🚀 ~ hashPass:', hashPass);
       bcrypt.compare(pass, hashPass, (err, result) => {
-        console.log('🚀 ~ result:', result);
+        console.log('🚀 ~ result:', result); // true ||  false
 
         if (result) {
           const token = jwt.sign(
             { userID: checkUser[0]._id },
             process.env.SECRET_KEY,
           );
-          res.status(202).send({ msg: 'login Succesfull...', token: token });
+          res.status(202).send({ msg: 'login Succesfull...', token });
         } else {
           res.status(404).send(`login Unsuccesfull password ${err}...`);
         }
