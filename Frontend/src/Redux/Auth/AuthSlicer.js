@@ -69,9 +69,5 @@ const AuthSlicer = createSlice({
   },
 });
 
-<<<<<<< HEAD
 export const { addTodo } = AuthSlicer.actions;
 export const Reducer = AuthSlicer.reducer;
-=======
-export const Reducer = AuthSlicer.reducer;
->>>>>>> 248906669cc7af81ce1ff6710a0a0d98cacf85b4
