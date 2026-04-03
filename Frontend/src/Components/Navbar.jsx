@@ -14,6 +14,10 @@ export const Navbar = () => {
       path: '/login',
       title: 'login',
     },
+    {
+      path: '/products',
+      title: 'products',
+    },
   ];
 
   return (

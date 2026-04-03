@@ -14,6 +14,8 @@ const { Conection } = require('./Config/DB');
 const { SignupModel } = require('./Model/Signup.model');
 const { Authentication } = require('./Middleware/Authentication');
 
+const { productsRoutes } = require('./Routes/Products.Routes');
+
 // here server created...
 const app = express();
 
@@ -73,8 +75,8 @@ app.post('/signup', async (req, res) => {
 // login
 app.post('/login', async (req, res) => {
   const { email, pass } = req.body;
-  //   console.log('🚀 ~ pass:', pass);
-  //   console.log('🚀 ~ email:', email);
+  console.log('🚀 ~ pass:', pass);
+  console.log('🚀 ~ email:', email);
 
   try {
     const checkUser = await SignupModel.find({ email });
@@ -109,9 +111,10 @@ app.post('/login', async (req, res) => {
   // res.status(200).send({ email, pass });
 });
 
-app.use(Authentication);
+// app.use(Authentication);
 //  here we have to create routes and the files.
 
+app.use('/products', productsRoutes);
 // app.use('/notes', notesRoutes);
 
 // res.status(200).send(JSON.stringify({ email, pass }))
