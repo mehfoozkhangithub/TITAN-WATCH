@@ -33,7 +33,7 @@ export const signUser = createAsyncThunk(
 const AuthSlicer = createSlice({
   name: 'auth',
   initialState: {
-    isAuth: localStorage.getItem('token') || false,
+    isAuth: localStorage.getItem('token') ? true : false,
     isLoading: false,
     isError: { status: null, msg: null },
     token: localStorage.getItem('token') || '',
